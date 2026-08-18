@@ -310,7 +310,7 @@ function OfflineReveal({
           VOTED OUT
         </div>
 
-        <h1 className="dramatic-player-name">
+        <h1 className="dramatic-player-name reveal-voted-name">
           {result.votedOutName}
         </h1>
       </>
@@ -320,11 +320,11 @@ function OfflineReveal({
   if (stage?.type === "was") {
     content = (
       <>
-        <h1 className="dramatic-player-name">
+        <h1 className="dramatic-player-name reveal-held-name">
           {result.votedOutName}
         </h1>
 
-        <div className="dramatic-was">
+        <div className="dramatic-was reveal-was-hit">
           WAS...
         </div>
       </>
@@ -360,21 +360,61 @@ function OfflineReveal({
       stage.role === "IMPOSTER";
 
     content = (
-      <>
-        <div className="result-icon">
-          {imposter ? "😈" : "😇"}
+      <div
+        className={`reveal-role-drop-zone ${
+          revealEffects
+            ? "reveal-role-effects-on"
+            : "reveal-role-effects-off"
+        } ${
+          imposter
+            ? "reveal-role-zone-imposter"
+            : "reveal-role-zone-innocent"
+        }`}
+      >
+        <div className="reveal-role-stack">
+          <div className="result-icon reveal-role-icon">
+            {imposter ? "😈" : "😇"}
+          </div>
+
+          <div
+            className={`dramatic-role ${
+              imposter
+                ? "dramatic-imposter"
+                : "dramatic-innocent"
+            }`}
+          >
+            {stage.role}
+          </div>
         </div>
 
-        <div
-          className={`dramatic-role ${
-            imposter
-              ? "dramatic-imposter"
-              : "dramatic-innocent"
-          }`}
-        >
-          {stage.role}
-        </div>
-      </>
+        {revealEffects && (
+          <>
+            <div
+              className="reveal-impact-flash"
+              aria-hidden="true"
+            />
+
+            <div
+              className="reveal-impact-line"
+              aria-hidden="true"
+            />
+
+            <div
+              className="reveal-impact-particles"
+              aria-hidden="true"
+            >
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+            </div>
+          </>
+        )}
+      </div>
     );
   }
 
@@ -382,7 +422,17 @@ function OfflineReveal({
     <div className="app">
       <div className="main-panel reveal-main-panel">
         <div className="dramatic-reveal-stage">
-          {content}
+          <div
+            key={`${result.revealId}-${stageIndex}`}
+            className={`reveal-stage-content ${
+              stage?.type === "role" &&
+              revealEffects
+                ? "reveal-stage-content-impact"
+                : ""
+            }`}
+          >
+            {content}
+          </div>
         </div>
 
         {finished && (

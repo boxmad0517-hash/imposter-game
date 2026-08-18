@@ -2025,3 +2025,803 @@ button:disabled {
       1 !important;
   }
 }
+
+/* =========================================================
+   HOME INTRO DROP
+   ========================================================= */
+
+.home-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(95, 65, 165, 0.14),
+      transparent 38%
+    ),
+    #07080d;
+
+  animation:
+    homeIntroShake 0.24s ease-out 0.72s both;
+}
+
+.home-intro-logo {
+  position: relative;
+  z-index: 2;
+
+  color: #fff;
+
+  font-size: clamp(
+    4rem,
+    15vw,
+    9rem
+  );
+
+  font-weight: 1000;
+  line-height: 0.85;
+
+  letter-spacing: -0.065em;
+
+  text-shadow:
+    0 6px 0 rgba(105, 74, 185, 0.9),
+    0 13px 0 rgba(55, 39, 100, 0.75),
+    0 25px 50px rgba(0, 0, 0, 0.7);
+
+  transform-origin: center bottom;
+
+  animation:
+    homeLogoDrop
+    0.78s
+    cubic-bezier(
+      0.12,
+      1.05,
+      0.28,
+      1
+    )
+    both;
+}
+
+.home-intro-impact {
+  position: absolute;
+
+  left: 50%;
+  top: 58%;
+
+  width: min(70vw, 520px);
+  height: 35px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(132, 96, 255, 0.38),
+      transparent 70%
+    );
+
+  filter: blur(5px);
+
+  transform:
+    translateX(-50%)
+    scaleX(0);
+
+  animation:
+    homeImpact
+    0.55s ease-out
+    0.65s both;
+}
+
+@keyframes homeLogoDrop {
+  0% {
+    opacity: 0;
+
+    transform:
+      translateY(-120vh)
+      scaleX(0.8)
+      scaleY(1.25);
+  }
+
+  58% {
+    opacity: 1;
+
+    transform:
+      translateY(24px)
+      scaleX(1.12)
+      scaleY(0.78);
+  }
+
+  73% {
+    transform:
+      translateY(-11px)
+      scaleX(0.96)
+      scaleY(1.06);
+  }
+
+  86% {
+    transform:
+      translateY(5px)
+      scaleX(1.02)
+      scaleY(0.98);
+  }
+
+  100% {
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes homeImpact {
+  0% {
+    opacity: 0;
+
+    transform:
+      translateX(-50%)
+      scaleX(0);
+  }
+
+  45% {
+    opacity: 1;
+
+    transform:
+      translateX(-50%)
+      scaleX(1.25);
+  }
+
+  100% {
+    opacity: 0.25;
+
+    transform:
+      translateX(-50%)
+      scaleX(0.82);
+  }
+}
+
+@keyframes homeIntroShake {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  20% {
+    transform: translate(-4px, 3px);
+  }
+
+  40% {
+    transform: translate(4px, -2px);
+  }
+
+  60% {
+    transform: translate(-3px, 1px);
+  }
+
+  80% {
+    transform: translate(2px, 0);
+  }
+}
+
+/* =========================================================
+   REVEAL DROP / IMPACT UPGRADE
+   ========================================================= */
+
+.dramatic-reveal-stage {
+  position: relative;
+  overflow: visible;
+}
+
+.reveal-stage-content {
+  width: 100%;
+  min-height: 330px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  text-align: center;
+}
+
+.reveal-stage-content-impact {
+  animation:
+    revealStageImpact
+    0.34s
+    ease-out
+    0.47s
+    both;
+}
+
+.reveal-voted-name {
+  animation:
+    revealNameDrop
+    0.62s
+    cubic-bezier(
+      0.16,
+      0.9,
+      0.24,
+      1.12
+    )
+    both;
+}
+
+.reveal-held-name {
+  animation:
+    revealHeldName
+    0.38s
+    ease-out
+    both;
+}
+
+.reveal-was-hit {
+  animation:
+    revealWasHit
+    0.55s
+    cubic-bezier(
+      0.2,
+      0.9,
+      0.25,
+      1.2
+    )
+    both;
+}
+
+.reveal-role-drop-zone {
+  width: 100%;
+  min-height: 290px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  isolation: isolate;
+}
+
+.reveal-role-stack {
+  position: relative;
+  z-index: 4;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  transform-origin: center bottom;
+}
+
+.reveal-role-effects-on .reveal-role-stack {
+  animation:
+    revealRoleDrop
+    0.82s
+    cubic-bezier(
+      0.12,
+      1.02,
+      0.25,
+      1
+    )
+    both;
+}
+
+.reveal-role-effects-off .reveal-role-stack {
+  animation: none;
+}
+
+.reveal-role-icon {
+  position: relative;
+  z-index: 2;
+
+  margin-bottom: 10px;
+
+  font-size: clamp(
+    3.2rem,
+    11vw,
+    5.4rem
+  );
+
+  filter:
+    drop-shadow(
+      0 14px 24px
+      rgba(0, 0, 0, 0.42)
+    );
+}
+
+.reveal-role-zone-imposter .reveal-role-icon {
+  filter:
+    drop-shadow(
+      0 12px 24px
+      rgba(255, 65, 95, 0.24)
+    );
+}
+
+.reveal-role-zone-innocent .reveal-role-icon {
+  filter:
+    drop-shadow(
+      0 12px 24px
+      rgba(105, 165, 255, 0.22)
+    );
+}
+
+.reveal-role-drop-zone .dramatic-role {
+  animation: none;
+}
+
+.reveal-impact-line {
+  position: absolute;
+  z-index: 2;
+
+  left: 50%;
+  bottom: 39px;
+
+  width: min(88%, 430px);
+  height: 24px;
+
+  border-radius: 50%;
+
+  opacity: 0;
+
+  transform:
+    translateX(-50%)
+    scaleX(0.1);
+
+  filter: blur(3px);
+}
+
+.reveal-role-zone-imposter .reveal-impact-line {
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(255, 72, 105, 0.82),
+      rgba(146, 72, 255, 0.34) 43%,
+      transparent 72%
+    );
+}
+
+.reveal-role-zone-innocent .reveal-impact-line {
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(130, 190, 255, 0.78),
+      rgba(130, 120, 255, 0.28) 43%,
+      transparent 72%
+    );
+}
+
+.reveal-role-effects-on .reveal-impact-line {
+  animation:
+    revealImpactLine
+    0.54s
+    ease-out
+    0.43s
+    both;
+}
+
+.reveal-impact-flash {
+  position: absolute;
+  z-index: 1;
+
+  left: 50%;
+  bottom: -40px;
+
+  width: min(120vw, 720px);
+  aspect-ratio: 1;
+
+  border-radius: 50%;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transform:
+    translateX(-50%)
+    scale(0.15);
+
+  filter: blur(14px);
+}
+
+.reveal-role-zone-imposter .reveal-impact-flash {
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 65, 95, 0.28),
+      rgba(119, 67, 255, 0.13) 34%,
+      transparent 68%
+    );
+}
+
+.reveal-role-zone-innocent .reveal-impact-flash {
+  background:
+    radial-gradient(
+      circle,
+      rgba(100, 180, 255, 0.25),
+      rgba(117, 107, 255, 0.11) 34%,
+      transparent 68%
+    );
+}
+
+.reveal-role-effects-on .reveal-impact-flash {
+  animation:
+    revealImpactFlash
+    0.58s
+    ease-out
+    0.42s
+    both;
+}
+
+.reveal-impact-particles {
+  position: absolute;
+  z-index: 3;
+
+  left: 50%;
+  bottom: 53px;
+
+  width: 1px;
+  height: 1px;
+
+  pointer-events: none;
+}
+
+.reveal-impact-particles span {
+  --spark-x: 0px;
+  --spark-y: -80px;
+  --spark-r: 0deg;
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 4px;
+  height: 20px;
+
+  border-radius: 999px;
+
+  opacity: 0;
+
+  background: rgba(255, 255, 255, 0.84);
+
+  transform-origin: center bottom;
+
+  box-shadow:
+    0 0 10px
+    rgba(255, 255, 255, 0.28);
+
+  animation:
+    revealParticleBurst
+    0.58s
+    ease-out
+    0.45s
+    both;
+}
+
+.reveal-role-zone-imposter .reveal-impact-particles span {
+  background:
+    linear-gradient(
+      to top,
+      rgba(255, 75, 105, 0.25),
+      rgba(255, 226, 234, 0.96)
+    );
+}
+
+.reveal-role-zone-innocent .reveal-impact-particles span {
+  background:
+    linear-gradient(
+      to top,
+      rgba(105, 175, 255, 0.24),
+      rgba(232, 245, 255, 0.96)
+    );
+}
+
+.reveal-impact-particles span:nth-child(1) {
+  --spark-x: -150px;
+  --spark-y: -56px;
+  --spark-r: -66deg;
+}
+
+.reveal-impact-particles span:nth-child(2) {
+  --spark-x: -112px;
+  --spark-y: -104px;
+  --spark-r: -42deg;
+}
+
+.reveal-impact-particles span:nth-child(3) {
+  --spark-x: -54px;
+  --spark-y: -128px;
+  --spark-r: -20deg;
+}
+
+.reveal-impact-particles span:nth-child(4) {
+  --spark-x: -12px;
+  --spark-y: -142px;
+  --spark-r: -5deg;
+}
+
+.reveal-impact-particles span:nth-child(5) {
+  --spark-x: 12px;
+  --spark-y: -142px;
+  --spark-r: 5deg;
+}
+
+.reveal-impact-particles span:nth-child(6) {
+  --spark-x: 54px;
+  --spark-y: -128px;
+  --spark-r: 20deg;
+}
+
+.reveal-impact-particles span:nth-child(7) {
+  --spark-x: 112px;
+  --spark-y: -104px;
+  --spark-r: 42deg;
+}
+
+.reveal-impact-particles span:nth-child(8) {
+  --spark-x: 150px;
+  --spark-y: -56px;
+  --spark-r: 66deg;
+}
+
+@keyframes revealNameDrop {
+  0% {
+    opacity: 0;
+
+    transform:
+      translateY(-120px)
+      scaleY(1.12);
+  }
+
+  66% {
+    opacity: 1;
+
+    transform:
+      translateY(9px)
+      scaleY(0.94);
+  }
+
+  82% {
+    transform:
+      translateY(-4px)
+      scaleY(1.02);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes revealHeldName {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes revealWasHit {
+  0% {
+    opacity: 0;
+    transform: scale(0.45);
+  }
+
+  68% {
+    opacity: 1;
+    transform: scale(1.16);
+  }
+
+  100% {
+    opacity: 0.72;
+    transform: scale(1);
+  }
+}
+
+@keyframes revealRoleDrop {
+  0% {
+    opacity: 0;
+
+    transform:
+      translateY(-105vh)
+      scaleX(0.82)
+      scaleY(1.22);
+  }
+
+  55% {
+    opacity: 1;
+
+    transform:
+      translateY(25px)
+      scaleX(1.13)
+      scaleY(0.76);
+  }
+
+  70% {
+    transform:
+      translateY(-13px)
+      scaleX(0.96)
+      scaleY(1.07);
+  }
+
+  84% {
+    transform:
+      translateY(6px)
+      scaleX(1.025)
+      scaleY(0.98);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes revealStageImpact {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  18% {
+    transform: translate(-5px, 3px);
+  }
+
+  36% {
+    transform: translate(5px, -2px);
+  }
+
+  54% {
+    transform: translate(-3px, 2px);
+  }
+
+  72% {
+    transform: translate(3px, -1px);
+  }
+
+  88% {
+    transform: translate(-1px, 0);
+  }
+}
+
+@keyframes revealImpactLine {
+  0% {
+    opacity: 0;
+
+    transform:
+      translateX(-50%)
+      scaleX(0.08);
+  }
+
+  36% {
+    opacity: 1;
+
+    transform:
+      translateX(-50%)
+      scaleX(1.18);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translateX(-50%)
+      scaleX(0.72);
+  }
+}
+
+@keyframes revealImpactFlash {
+  0% {
+    opacity: 0;
+    transform:
+      translateX(-50%)
+      scale(0.12);
+  }
+
+  35% {
+    opacity: 1;
+    transform:
+      translateX(-50%)
+      scale(0.72);
+  }
+
+  100% {
+    opacity: 0;
+    transform:
+      translateX(-50%)
+      scale(1.12);
+  }
+}
+
+@keyframes revealParticleBurst {
+  0%,
+  54% {
+    opacity: 0;
+
+    transform:
+      translate(0, 0)
+      rotate(var(--spark-r))
+      scaleY(0.25);
+  }
+
+  62% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(
+        var(--spark-x),
+        var(--spark-y)
+      )
+      rotate(var(--spark-r))
+      scaleY(1);
+  }
+}
+
+@media (max-width: 500px) {
+  .reveal-stage-content {
+    min-height: 300px;
+  }
+
+  .reveal-role-drop-zone {
+    min-height: 260px;
+  }
+
+  .reveal-impact-line {
+    bottom: 34px;
+    width: 92%;
+  }
+
+  .reveal-impact-particles {
+    bottom: 48px;
+  }
+
+  .reveal-impact-particles span:nth-child(1) {
+    --spark-x: -112px;
+  }
+
+  .reveal-impact-particles span:nth-child(2) {
+    --spark-x: -88px;
+  }
+
+  .reveal-impact-particles span:nth-child(7) {
+    --spark-x: 88px;
+  }
+
+  .reveal-impact-particles span:nth-child(8) {
+    --spark-x: 112px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-stage-content-impact,
+  .reveal-voted-name,
+  .reveal-held-name,
+  .reveal-was-hit,
+  .reveal-role-stack,
+  .reveal-impact-line,
+  .reveal-impact-flash,
+  .reveal-impact-particles span {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

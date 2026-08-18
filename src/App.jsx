@@ -348,7 +348,7 @@ function VoteRevealScreen({
           VOTED OUT
         </div>
 
-        <h1 className="dramatic-player-name">
+        <h1 className="dramatic-player-name reveal-voted-name">
           {voteResult?.voted_out_name ||
             "UNKNOWN"}
         </h1>
@@ -363,12 +363,12 @@ function VoteRevealScreen({
   if (stage?.type === "was") {
     mainContent = (
       <>
-        <h1 className="dramatic-player-name">
+        <h1 className="dramatic-player-name reveal-held-name">
           {voteResult?.voted_out_name ||
             "UNKNOWN"}
         </h1>
 
-        <div className="dramatic-was">
+        <div className="dramatic-was reveal-was-hit">
           WAS...
         </div>
       </>
@@ -416,21 +416,61 @@ function VoteRevealScreen({
       stage.role === "IMPOSTER";
 
     mainContent = (
-      <>
-        <div className="result-icon">
-          {imposter ? "😈" : "😇"}
+      <div
+        className={`reveal-role-drop-zone ${
+          revealEffectsEnabled
+            ? "reveal-role-effects-on"
+            : "reveal-role-effects-off"
+        } ${
+          imposter
+            ? "reveal-role-zone-imposter"
+            : "reveal-role-zone-innocent"
+        }`}
+      >
+        <div className="reveal-role-stack">
+          <div className="result-icon reveal-role-icon">
+            {imposter ? "😈" : "😇"}
+          </div>
+
+          <div
+            className={`dramatic-role ${
+              imposter
+                ? "dramatic-imposter"
+                : "dramatic-innocent"
+            }`}
+          >
+            {stage.role}
+          </div>
         </div>
 
-        <div
-          className={`dramatic-role ${
-            imposter
-              ? "dramatic-imposter"
-              : "dramatic-innocent"
-          }`}
-        >
-          {stage.role}
-        </div>
-      </>
+        {revealEffectsEnabled && (
+          <>
+            <div
+              className="reveal-impact-flash"
+              aria-hidden="true"
+            />
+
+            <div
+              className="reveal-impact-line"
+              aria-hidden="true"
+            />
+
+            <div
+              className="reveal-impact-particles"
+              aria-hidden="true"
+            >
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+            </div>
+          </>
+        )}
+      </div>
     );
   }
 
@@ -438,7 +478,17 @@ function VoteRevealScreen({
     <div className="app">
       <div className="main-panel reveal-main-panel">
         <div className="dramatic-reveal-stage">
-          {mainContent}
+          <div
+            key={`${voteResult?.created_at || "vote"}-${stageIndex}`}
+            className={`reveal-stage-content ${
+              stage?.type === "role" &&
+              revealEffectsEnabled
+                ? "reveal-stage-content-impact"
+                : ""
+            }`}
+          >
+            {mainContent}
+          </div>
         </div>
 
         {error && (
@@ -533,9 +583,26 @@ function VoteRevealScreen({
 // MAIN APP
 // ============================================================
 
+function HomeIntro() {
+  return (
+    <div className="home-intro">
+      <div className="home-intro-logo">
+        IMPOSTER
+      </div>
+
+      <div className="home-intro-impact" />
+    </div>
+  );
+}
+
 function App() {
   const [screen, setScreen] =
     useState("loading");
+  
+  const [
+  homeIntroDone,
+  setHomeIntroDone,
+] = useState(false);
 
   const [authUserId, setAuthUserId] =
     useState(null);
@@ -626,6 +693,22 @@ function App() {
     setVoteSubmitted,
   ] = useState(false);
 
+  useEffect(() => {
+  if (
+    screen !== "home" ||
+    homeIntroDone
+  ) {
+    return;
+  }
+
+  const timer = setTimeout(() => {
+    setHomeIntroDone(true);
+  }, 1900);
+
+  return () => {
+    clearTimeout(timer);
+  };
+}, [screen, homeIntroDone]);
   // DISCUSSION INTRO TIMER
   useEffect(() => {
     if (screen !== "discuss_intro") {
@@ -3336,6 +3419,14 @@ if (screen === "offline") {
     />
   );
 }
+
+if (
+  screen === "home" &&
+  !homeIntroDone
+) {
+  return <HomeIntro />;
+}
+
   if (
     screen === "home"
   ) {
